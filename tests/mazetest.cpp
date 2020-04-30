@@ -19,13 +19,35 @@ const char *m1 =
   "#.....<..#\n"
   "##########\n";
 
+const char *m2_invalid_dims =
+    "6\n"
+    "##########\n"
+    "#........#\n"
+    "#.###....#\n"
+    "#.#......#\n"
+    "#.....<..#\n"
+    "##########\n";
+
+const char *m3_illegal_row =
+    "10 6\n"
+    "##########\n"
+    "#........#\n"
+    "#.###....#\n"
+    "#.#......\n"
+    "#.....<..#\n"
+    "##########\n";
+
 struct TestObjs {
   Maze *maze1;
+  Maze *maze2;
+  Maze *maze3;
 };
 
 TestObjs *setup() {
   TestObjs *objs = new TestObjs;
   objs->maze1 = readFromString(m1);
+  objs->maze2 = readFromString(m2_invalid_dims);
+  objs->maze3 = readFromString(m3_illegal_row);  
   return objs;
 }
 
@@ -38,6 +60,7 @@ void testGetWidth(TestObjs *objs);
 void testGetHeight(TestObjs *objs);
 void testGetTile(TestObjs *objs);
 void testSetTile(TestObjs *objs);
+void testInvalidMazeDimensions(TestObjs *objs);
 
 int main(int argc, char *argv[]) {
   TEST_INIT();
@@ -51,6 +74,7 @@ int main(int argc, char *argv[]) {
   TEST(testGetHeight);
   TEST(testGetTile);
   TEST(testSetTile);
+  TEST(testInvalidMazeDimensions);
 
   TEST_FINI();
 }
@@ -87,4 +111,9 @@ void testSetTile(TestObjs *) {
   ASSERT("." == maze->getTile(Position(4, 3))->getGlyph());
 
   delete maze;
+}
+
+void testInvalidMazeDimensions(TestObjs *objs) {
+  ASSERT(objs->maze2 == nullptr);
+  ASSERT(objs->maze3 == nullptr);
 }
