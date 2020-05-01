@@ -44,11 +44,30 @@ const char *m3 =
   "#.....<..#\n"
   "##########\n";
 
+const char *m2_invalid_dims =
+    "6\n"
+    "##########\n"
+    "#........#\n"
+    "#.###....#\n"
+    "#.#......#\n"
+    "#.....<..#\n"
+    "##########\n";
+
+const char *m3_illegal_row =
+    "10 6\n"
+    "##########\n"
+    "#........#\n"
+    "#.###....#\n"
+    "#.#......\n"
+    "#.....<..#\n"
+    "##########\n";
 
 struct TestObjs {
   Maze *maze1;
   Maze *maze2;
   Maze *maze3;
+  Maze *maze4;
+  Maze *maze5;
 };
 
 TestObjs *setup() {
@@ -56,6 +75,8 @@ TestObjs *setup() {
   objs->maze1 = readFromString(m1);
   objs->maze2 = readFromString(m2);
   objs->maze3 = readFromString(m3);
+  objs->maze4 = readFromString(m2_invalid_dims);
+  objs->maze5 = readFromString(m3_illegal_row);  
   return objs;
 }
 
@@ -63,6 +84,8 @@ void cleanup(TestObjs *objs) {
   delete objs->maze1;
   delete objs->maze2;
   delete objs->maze3;
+  delete objs->maze4;
+  delete objs->maze5;
   delete objs;
 }
 
@@ -72,6 +95,7 @@ void testGetTile(TestObjs *objs);
 void testInBounds(TestObjs *objs);
 void testSetTile(TestObjs *objs);
 void testReadMaze(TestObjs *objs);
+void testInvalidMazeDimensions(TestObjs *objs);
 
 int main(int argc, char *argv[]) {
   TEST_INIT();
@@ -87,6 +111,7 @@ int main(int argc, char *argv[]) {
   TEST(testInBounds);
   TEST(testSetTile);
   TEST(testReadMaze);
+  TEST(testInvalidMazeDimensions);
 
   TEST_FINI();
 }
@@ -125,7 +150,7 @@ void testGetTile(TestObjs *objs) {
   ASSERT(!p3->isGoal());
 }
 
-void testSetTile(TestObjs *objs) {
+void testSetTile(TestObjs *) {
   Maze *maze = new Maze(10, 5);
 
   Tile *tile1 = TileFactory::getInstance()->createFromChar('#');
@@ -149,4 +174,9 @@ void testReadMaze(TestObjs *objs){
   ASSERT(!(objs->maze1 == nullptr));
   ASSERT(objs->maze2 == nullptr);
   ASSERT(objs->maze3 == nullptr);
+}
+
+void testInvalidMazeDimensions(TestObjs *objs) {
+  ASSERT(objs->maze4 == nullptr);
+  ASSERT(objs->maze5 == nullptr);
 }
