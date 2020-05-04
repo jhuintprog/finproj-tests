@@ -21,6 +21,8 @@ diff -u expected/mazeSoloSuccessOutput.txt actual/mazeSoloSuccessOutput.txt
 diff -u expected/mazeSoloCollideWallOutput.txt actual/mazeSoloCollideWallOutput.txt
 ```
 
+If either of the `diff` commands produces output, it means that your driver program did not generate the expected output.
+
 ## Contributing improved tests
 
 If you would like to contribute your improvements, please do the following:
