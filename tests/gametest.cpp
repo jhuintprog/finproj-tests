@@ -86,6 +86,7 @@ struct TestObjs {
   Game *game2;
   Game *game3;
   Game *game4;
+  Entity *ent;
 };
 
 TestObjs *setup() {
@@ -148,6 +149,11 @@ TestObjs *setup() {
   objs->game4->setGameRules(new BasicGameRules());
   objs->game4->setUI(nullptr);
 
+  // test that an Entity can have multiple properties
+  objs->ent = new Entity();
+  objs->ent->setGlyph("E");
+  objs->ent->setProperties("abcdef");
+
   return objs;
 }
 
@@ -156,6 +162,7 @@ void cleanup(TestObjs *objs) {
   delete objs->game2;
   delete objs->game3;
   delete objs->game4; //Maddie 
+  delete objs->ent;
   delete objs;
 }
 
@@ -168,6 +175,7 @@ void testChaseHero1(TestObjs *objs);
 void testTextUIRender(TestObjs *objs);
 #endif // USE_TEXTUI_TESTS
 void testChaseHero2(TestObjs *objs); //Maddie 
+void testEntityWithMultipleProperties(TestObjs *objs);
 
 int main(int argc, char *argv[]) {
   TEST_INIT();
@@ -186,6 +194,7 @@ int main(int argc, char *argv[]) {
   TEST(testTextUIRender);
 #endif // USE_TEXTUI_TESTS
   TEST(testChaseHero2);
+  TEST(testEntityWithMultipleProperties);
 
   TEST_FINI();
 }
@@ -402,3 +411,14 @@ void testChaseHero2(TestObjs *objs) {
 
 }
 
+void testEntityWithMultipleProperties(TestObjs *objs) {
+  ASSERT(objs->ent->hasProperty('a'));
+  ASSERT(objs->ent->hasProperty('b'));
+  ASSERT(objs->ent->hasProperty('c'));
+  ASSERT(objs->ent->hasProperty('d'));
+  ASSERT(objs->ent->hasProperty('e'));
+  ASSERT(objs->ent->hasProperty('f'));
+  ASSERT(!objs->ent->hasProperty('h'));
+  ASSERT(!objs->ent->hasProperty('m'));
+  ASSERT(!objs->ent->hasProperty('v'));
+}
