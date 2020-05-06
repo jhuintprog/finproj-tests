@@ -125,7 +125,7 @@ TestObjs *setup() {
   Entity *new_ent = new Entity();
   new_ent->setGlyph("*");
   new_ent->setProperties("m");
-  new_ent->setPosition(Position(2, 6));
+  new_ent->setPosition(Position(2, 5));
   EntityControllerFactory *ecfactory = EntityControllerFactory::getInstance();
   EntityController *ctrl = ecfactory->createFromChar('a');
   new_ent->setController(ctrl);
@@ -223,7 +223,7 @@ void testGetEntityAt(TestObjs *objs){
   Position p3(0,0);
   Entity *ent1 = objs->game1->getEntityAt(p3);
   ASSERT(ent1 == nullptr);
-  Position p2(2, 6);
+  Position p2(2, 5);
   Entity *ent2 = objs->game1->getEntityAt(p2);
   ASSERT(ent2->getGlyph() == "*");
 
