@@ -224,7 +224,6 @@ void testGetEntityAt(TestObjs *objs){
   Position p2(2, 5);
   Entity *ent2 = objs->game1->getEntityAt(p2);
   ASSERT(ent2->getGlyph() == "*");
-#endif
 }
 void testGetEntitiesWithProperty(TestObjs *objs) {
   std::vector<Entity *> heroes = objs->game1->getEntitiesWithProperty('h');
